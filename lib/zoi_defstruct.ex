@@ -15,12 +15,22 @@ defmodule ZoiDefstruct do
       %Person{name: "hello"}
   """
 
+  alias Zoi.Types.Object, as: ZO
+  alias Zoi.Types.Default, as: ZD
+
   @doc """
   Define a struct from Zoi schema.
   """
   defmacro defstructure(schema) do
     quote location: :keep do
-      defstruct ZoiDefstruct.struct_keys(unquote(schema))
+      schema = unquote(schema)
+      enforce_keys = ZoiDefstruct.struct_enforce_keys(schema)
+
+      if enforce_keys != [] do
+        @enforce_keys enforce_keys
+      end
+
+      defstruct ZoiDefstruct.struct_keys(schema)
     end
   end
 
@@ -32,8 +42,22 @@ defmodule ZoiDefstruct do
 
   # Convert object into struct keys.
   @doc false
-  def struct_keys(%Zoi.Types.Object{fields: fields}) do
+  def struct_keys(%ZO{fields: fields}) do
     fields
-    |> Enum.map(fn {key, _} -> key end)
+    |> Enum.map(&with_name_and_optional/1)
   end
+
+  def struct_enforce_keys(%ZO{fields: fields}) do
+    fields
+    |> Enum.filter(&required?/1)
+    |> Enum.map(&with_name/1)
+  end
+
+  defp with_name_and_optional({name, %ZD{value: value}}), do: {name, value}
+  defp with_name_and_optional({name, _}), do: name
+
+  defp with_name({name, _}), do: name
+
+  defp required?({_, %ZD{}}), do: false
+  defp required?({_, schema}), do: schema.meta.required
 end

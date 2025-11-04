@@ -1,6 +1,8 @@
 # ZoiDefstruct
 
-**TODO: Add description**
+`ZoiDefstruct` helps you define a struct from a `Zoi` object schema. 
+
+See the `moduledoc` in lib/zoi_defstruct.ex for more details.
 
 ## Installation
 

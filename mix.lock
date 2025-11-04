@@ -1,0 +1,3 @@
+%{
+  "zoi": {:hex, :zoi, "0.8.4", "7699054e980aafc1ad6aff3f96ec83ce48ca96f80303f05baebd58fa997695e9", [:mix], [{:decimal, "~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "38d1c82d52d53002ba0a32966cb48d909dac827d979e4884c61f3022f5a3cbae"},
+}

@@ -5,11 +5,7 @@ defmodule ZoiDefstructTest do
   defmodule A do
     use ZoiDefstruct
 
-    @schema Zoi.object(%{
-              name: Zoi.string()
-            })
-
-    defstructure(@schema)
+    defstruct name: Zoi.string()
   end
 
   test "define struct keys" do
@@ -25,12 +21,7 @@ defmodule ZoiDefstructTest do
   defmodule MixedRequiredOptional do
     use ZoiDefstruct
 
-    @schema Zoi.object(%{
-              name: Zoi.string(),
-              age: Zoi.integer() |> Zoi.optional()
-            })
-
-    defstructure(@schema)
+    defstruct name: Zoi.string(), age: Zoi.integer() |> Zoi.optional()
   end
 
   test "mixed required and optional" do
@@ -40,14 +31,27 @@ defmodule ZoiDefstructTest do
   defmodule DefaultValue do
     use ZoiDefstruct
 
-    @schema Zoi.object(%{
-              tax_rate: Zoi.integer() |> Zoi.default(7)
-            })
-
-    defstructure(@schema)
+    # Zoi will convert to required field when calling `default` after `optional`.
+    defstruct tax_rate: Zoi.integer() |> Zoi.default(7) |> Zoi.optional()
   end
 
   test "default value" do
     assert %DefaultValue{tax_rate: 7} = %DefaultValue{}
+  end
+
+  defmodule NestedType do
+    use ZoiDefstruct
+
+    defstruct name: Zoi.string(), tax: DefaultValue.t()
+  end
+
+  test "nested type" do
+    assert %NestedType{name: "hello", tax: %DefaultValue{tax_rate: 7}} = %NestedType{
+             name: "hello",
+             tax: %DefaultValue{}
+           }
+
+    assert {:ok, %NestedType{name: "hello", tax: %DefaultValue{tax_rate: 7}}} =
+             Zoi.parse(NestedType.t(), %NestedType{name: "hello", tax: %DefaultValue{}})
   end
 end

@@ -2,12 +2,9 @@
 
 `ZoiDefstruct` helps you define a struct from a `Zoi` object schema. 
 
-See the `moduledoc` in lib/zoi_defstruct.ex for more details.
+See [documentation](https://hexdocs.pm/zoi_defstruct) for more details.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `zoi_defstruct` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -16,8 +13,3 @@ def deps do
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/zoi_defstruct>.
-

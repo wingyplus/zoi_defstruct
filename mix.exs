@@ -19,7 +19,8 @@ defmodule ZoiDefstruct.MixProject do
 
   defp deps do
     [
-      {:zoi, "~> 0.8"}
+      {:zoi, "~> 0.8"},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false, warn_if_outdated: true}
     ]
   end
 end

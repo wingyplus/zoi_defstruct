@@ -12,6 +12,23 @@ defmodule ZoiDefstruct do
 
         defstruct name: Zoi.string(), age: Zoi.integer()
       end
+
+  ## Using with another struct
+
+  `ZoiDefstruct` generates a function `t/0` that returns a `Zoi` schema so you can
+  use it in other structs. Let's enhance the example above to add an address to the `Person` struct:
+
+      defmodule Address do
+        use ZoiDefstruct
+
+        defstruct address_line1: Zoi.string(), city: Zoi.string()
+      end
+
+      defmodule Person do
+        use ZoiDefstruct
+
+        defstruct name: Zoi.string(), age: Zoi.integer(), address: Address.t()
+      end
   """
 
   import Kernel, except: [defstruct: 1]

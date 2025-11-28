@@ -49,7 +49,7 @@ defmodule ZoiDefstruct do
       import ZoiDefstruct, except: [defstruct: 1]
       import Kernel
 
-      @struct Zoi.struct(__MODULE__, fields)
+      @struct Zoi.struct(__MODULE__, fields, coerce: true)
 
       @type t :: unquote(Zoi.type_spec(@struct))
 

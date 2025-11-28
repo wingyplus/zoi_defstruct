@@ -54,4 +54,9 @@ defmodule ZoiDefstructTest do
     assert {:ok, %NestedType{name: "hello", tax: %DefaultValue{tax_rate: 7}}} =
              Zoi.parse(NestedType.t(), %NestedType{name: "hello", tax: %DefaultValue{}})
   end
+
+  test "parse map" do
+    assert {:ok, %A{name: "hello"}} = Zoi.parse(A.t(), %{name: "hello"})
+    assert {:ok, %A{name: "hello"}} = Zoi.parse(A.t(), %{"name" => "hello"})
+  end
 end
